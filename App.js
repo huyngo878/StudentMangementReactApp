@@ -1,0 +1,43 @@
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
+import CategoriesScreen from "./screens/CategoriesScreen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import StudentOverviewScreen from "./screens/StudentOverviewScreen";
+import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+
+const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="Categories" component={CategoriesScreen} />
+      <Drawer.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+    </Drawer.Navigator>
+  );
+}
+
+export default function App() {
+  return (
+    <>
+      <StatusBar style="light" />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Student Categories" component={DrawerNavigator} />
+          <Stack.Screen
+            name="Student Overview"
+            component={StudentOverviewScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {},
+});

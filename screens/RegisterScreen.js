@@ -6,19 +6,47 @@ import {
   TouchableOpacity,
   StyleSheet,
   Modal,
+  Alert,
 } from "react-native";
 
 function RegisterScreen() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [playerName, setPlayerName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(true);
 
-  const handleRegister = () => {
-    console.log("Register attempt with:", firstName, lastName, email, password);
-    // Add your registration logic here
-    navigation.navigate("Student Categories");
+  const handleRegister = async () => {
+    try {
+      const response = await fetch(
+        "https://urchin-app-wyimv.ondigitalocean.app/api/v0/players/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            playerName: playerName, // The user's chosen name
+            email: email,
+            password: password,
+            passwordConfirm: passwordConfirm,
+          }),
+        }
+      );
+
+      const json = await response.json();
+
+      if (response.ok) {
+        console.log("Registration successful", json);
+        navigation.navigate("Student Categories"); // Replace with your actual success route
+      } else {
+        console.error("Registration failed", json);
+        // Here you can add user feedback, e.g., an alert
+      }
+    } catch (error) {
+      console.error("An error occurred during registration", error);
+      // And here too, user feedback would be appropriate
+    }
   };
 
   return (
@@ -33,15 +61,9 @@ function RegisterScreen() {
           <Text style={styles.title}>REGISTER</Text>
           <TextInput
             style={styles.input}
-            placeholder="First Name"
-            value={firstName}
-            onChangeText={setFirstName}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Last Name"
-            value={lastName}
-            onChangeText={setLastName}
+            placeholder="Name"
+            value={playerName}
+            onChangeText={setPlayerName}
           />
           <TextInput
             style={styles.input}
@@ -55,6 +77,13 @@ function RegisterScreen() {
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
+            secureTextEntry
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Confirm Password"
+            value={passwordConfirm}
+            onChangeText={setPasswordConfirm}
             secureTextEntry
           />
           <TouchableOpacity style={styles.button} onPress={handleRegister}>
@@ -71,10 +100,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Optional: for semi-transparent background
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalView: {
-    width: 300, // Fixed width
+    width: 300,
     margin: 20,
     backgroundColor: "white",
     borderRadius: 5,
@@ -92,16 +121,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   input: {
-    width: "100%", // Full width of the modalView
+    width: "100%",
     padding: 10,
     marginVertical: 8,
     borderWidth: 1,
-    borderColor: "#000", // Black border color to match the uploaded image
+    borderColor: "#000",
     borderRadius: 5,
   },
   button: {
-    width: "100%", // Full width of the modalView
-    backgroundColor: "#000", // Black background for buttons
+    width: "100%",
+    backgroundColor: "#000",
     padding: 10,
     marginVertical: 8,
     borderRadius: 5,

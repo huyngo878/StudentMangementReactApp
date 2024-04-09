@@ -13,15 +13,33 @@ function LoginScreen() {
   const [password, setPassword] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(true);
 
-  const handleLogin = () => {
-    console.log("Login attempt with:", username, password);
-    // Add your authentication logic here
-    navigation.navigate("Student Categories");
-  };
+  const handleLogin = async () => {
+    try {
+      const response = await fetch(
+        "https://urchin-app-wyimv.ondigitalocean.app/api/v0/players/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: username,
+            password: password,
+          }),
+        }
+      );
 
-  const handleRegister = () => {
-    navigation.navigate("Register");
-    // Here you'd typically navigate to your registration screen
+      const json = await response.json();
+
+      if (response.ok) {
+        console.log("Login successful", json);
+        navigation.navigate("Student Categories");
+      } else {
+        console.error("Login failed", json);
+      }
+    } catch (error) {
+      console.error("An error occurred during login", error);
+    }
   };
 
   return (

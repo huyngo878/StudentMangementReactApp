@@ -26,7 +26,7 @@ function RegisterScreen() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            playerName: playerName, // The user's chosen name
+            playerName: playerName,
             email: email,
             password: password,
             passwordConfirm: passwordConfirm,
@@ -38,14 +38,12 @@ function RegisterScreen() {
 
       if (response.ok) {
         console.log("Registration successful", json);
-        navigation.navigate("Student Categories"); // Replace with your actual success route
+        navigation.navigate("Student Categories");
       } else {
         console.error("Registration failed", json);
-        // Here you can add user feedback, e.g., an alert
       }
     } catch (error) {
       console.error("An error occurred during registration", error);
-      // And here too, user feedback would be appropriate
     }
   };
 

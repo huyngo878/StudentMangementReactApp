@@ -8,7 +8,7 @@ import {
   Modal,
 } from "react-native";
 
-function LoginScreen() {
+function LoginScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(true);
@@ -33,7 +33,8 @@ function LoginScreen() {
 
       if (response.ok) {
         console.log("Login successful", json);
-        navigation.navigate("Student Categories");
+        setIsModalVisible(false);
+        navigation.navigate("Categories");
       } else {
         console.error("Login failed", json);
       }
@@ -67,9 +68,6 @@ function LoginScreen() {
           />
           <TouchableOpacity style={styles.button} onPress={handleLogin}>
             <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleRegister}>
-            <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
         </View>
       </View>

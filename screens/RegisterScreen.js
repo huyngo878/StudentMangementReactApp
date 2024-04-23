@@ -9,7 +9,7 @@ import {
   Alert,
 } from "react-native";
 
-function RegisterScreen() {
+function RegisterScreen({ navigation }) {
   const [playerName, setPlayerName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,7 +38,8 @@ function RegisterScreen() {
 
       if (response.ok) {
         console.log("Registration successful", json);
-        navigation.navigate("Student Categories");
+        setIsModalVisible(false);
+        navigation.navigate("Categories");
       } else {
         console.error("Registration failed", json);
       }

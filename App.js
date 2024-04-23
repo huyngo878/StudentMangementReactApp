@@ -7,6 +7,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import StudentOverviewScreen from "./screens/StudentOverviewScreen";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import MapScreen from "./screens/MapScreen";
+//import { AuthProvider } from './components/AuthContext';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -16,7 +18,8 @@ function DrawerNavigator() {
     <Drawer.Navigator>
       <Drawer.Screen name="Categories" component={CategoriesScreen} />
       <Drawer.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
+      <Drawer.Screen name="Register" component={RegisterScreen} />
+      <Drawer.Screen name="Map" component={MapScreen} />
     </Drawer.Navigator>
   );
 }

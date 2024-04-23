@@ -5,14 +5,14 @@ function CategoryGridTile({ title, color, onPress }) {
     <View style={styles.gridItem}>
       <Pressable
         android_ripple={{ color: "#ccc" }}
-        styles={({ pressed }) => [
+        style={({ pressed }) => [
           styles.button,
           pressed ? styles.buttonPressed : null,
         ]}
         onPress={onPress}
       >
         <View style={[styles.innerContainer, { backgroundColor: color }]}>
-          <Text styles={styles.title}>{title}</Text>
+          <Text style={styles.title}>{title}</Text>
         </View>
       </Pressable>
     </View>
@@ -54,5 +54,6 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 18,
+    color: "white",
   },
 });

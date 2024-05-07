@@ -18,7 +18,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to capture images.",
+        "NSPhotoLibraryUsageDescription": "This app needs access to the photo library."
+      }
     },
     "android": {
       "adaptiveIcon": {

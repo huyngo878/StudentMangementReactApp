@@ -1,3 +1,4 @@
+// CategoriesScreen.js
 import React, { useState } from "react";
 import {
   View,
@@ -75,14 +76,16 @@ function CategoriesScreen({ navigation }) {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalView}>
-          {classes.map((item, index) => (
-            <Button
-              key={index}
-              title={item.label}
-              onPress={() => selectClass(item.value)}
-            />
-          ))}
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            {classes.map((item, index) => (
+              <Button
+                key={index}
+                title={item.label}
+                onPress={() => selectClass(item.value)}
+              />
+            ))}
+          </View>
         </View>
       </Modal>
 
@@ -108,6 +111,7 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderRadius: 5,
     margin: 10,
+    backgroundColor: "#FFF", // Add this line
   },
   dropdownButton: {
     borderWidth: 1,
@@ -115,14 +119,20 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 10,
     padding: 10,
-    backgroundColor: "#FFF",
+    backgroundColor: "#FFF", // Same as searchBar
   },
   dropdownText: {
     fontSize: 16,
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
   modalView: {
-    margin: 20,
-    backgroundColor: "white",
+    width: "80%",
+    backgroundColor: "#FFF",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -135,7 +145,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  // Add more styles as needed for your modal and buttons
 });
 
 export default CategoriesScreen;

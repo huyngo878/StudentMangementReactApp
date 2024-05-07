@@ -2,68 +2,91 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Text, Alert } from "react-native";
 import MapView, { Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
-import { CATEGORIES } from "../data/dummy-data";
+import axios from "axios"; // Ensure axios is installed
 
 const MapScreen = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
-  const [markers, setMarkers] = useState(
-    CATEGORIES.map((category) => ({
-      latitude: category.latitude,
-      longitude: category.longitude,
-      title: category.title,
-      description: `Timestamp: ${category.timestamp}`,
-      id: category.id,
-    }))
-  ); // Initialize markers with student locations
+  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        Alert.alert(
-          "Permission not granted",
-          "You need to grant location permissions to use this feature."
-        );
-        return;
-      }
-
-      let userLocation = await Location.getCurrentPositionAsync({});
-      setCurrentLocation({
-        latitude: userLocation.coords.latitude,
-        longitude: userLocation.coords.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      });
-
-      // Add new location marker for the user with timestamp
-      setMarkers((prevMarkers) => [
-        ...prevMarkers,
-        {
-          latitude: userLocation.coords.latitude,
-          longitude: userLocation.coords.longitude,
-          title: "My Current Location",
-          description: `Timestamp: ${new Date(
-            userLocation.timestamp
-          ).toISOString()}`,
-          id: "userLocation", // A unique id for the user's location marker
-        },
-      ]);
-    })();
+    fetchLocations();
   }, []);
+
+  const fetchLocations = async () => {
+    try {
+      console.log("Fetching location data from API...");
+      const response = await axios.get(
+        "https://urchin-app-wyimv.ondigitalocean.app/api/v0/players/locations"
+      );
+      console.log("API response:", response);
+
+      const { locations } = response.data.data;
+      console.log("Parsed locations data:", locations);
+
+      const formattedLocations = locations.map((loc) => ({
+        ...loc,
+        latitude: loc.latitude,
+        longitude: loc.longitude,
+        title: loc.playerName,
+        id: loc._id,
+      }));
+      console.log("Formatted locations for markers:", formattedLocations);
+
+      setMarkers(formattedLocations);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      Alert.alert(
+        "Error fetching data",
+        "Could not fetch location data from the server"
+      );
+    }
+  };
+
+  const handleLocateUser = async () => {
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert(
+        "Permission not granted",
+        "You need to grant location permissions to use this feature."
+      );
+      return;
+    }
+
+    console.log("Requesting current user location...");
+    const userLocation = await Location.getCurrentPositionAsync({});
+    console.log("User location obtained:", userLocation);
+
+    const location = {
+      latitude: userLocation.coords.latitude,
+      longitude: userLocation.coords.longitude,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    };
+    setCurrentLocation(location);
+
+    const newMarker = {
+      id: new Date().toISOString(),
+      latitude: userLocation.coords.latitude,
+      longitude: userLocation.coords.longitude,
+      timestamp: new Date().toISOString(),
+      title: "My Location",
+    };
+
+    console.log("Adding new marker for current location:", newMarker);
+    setMarkers((prev) => [...prev, newMarker]);
+  };
 
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        region={
-          currentLocation || {
-            latitude: 31.9686,
-            longitude: -99.9018,
-            latitudeDelta: 7,
-            longitudeDelta: 7,
-          }
-        }
-        showsUserLocation={true} // Optional: to show user's location with the default blue dot
+        initialRegion={{
+          latitude: 31.9686,
+          longitude: -99.9018,
+          latitudeDelta: 7,
+          longitudeDelta: 7,
+        }}
+        region={currentLocation}
       >
         {markers.map((marker) => (
           <Marker
@@ -73,26 +96,19 @@ const MapScreen = () => {
               longitude: marker.longitude,
             }}
             title={marker.title}
-            description={marker.description}
           >
             <Callout>
               <Text>{marker.title}</Text>
-              <Text>{marker.description}</Text>
+              <Text>Latitude: {marker.latitude}</Text>
+              <Text>Longitude: {marker.longitude}</Text>
             </Callout>
           </Marker>
         ))}
       </MapView>
+
       <TouchableOpacity
         style={styles.buttonContainer}
-        onPress={() => {
-          if (currentLocation) {
-            setCurrentLocation({
-              ...currentLocation,
-              latitudeDelta: 0.005,
-              longitudeDelta: 0.005,
-            });
-          }
-        }}
+        onPress={handleLocateUser}
       >
         <Text style={styles.buttonText}>Locate Me</Text>
       </TouchableOpacity>

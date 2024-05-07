@@ -1,3 +1,4 @@
+// models/Category.js
 class Category {
   constructor(
     id,
@@ -7,7 +8,8 @@ class Category {
     zipCode,
     latitude,
     longitude,
-    timestamp
+    timestamp,
+    projects = []
   ) {
     this.id = id;
     this.title = title;
@@ -17,6 +19,7 @@ class Category {
     this.latitude = latitude;
     this.longitude = longitude;
     this.timestamp = timestamp;
+    this.projects = projects;
   }
 }
 

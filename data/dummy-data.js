@@ -1,7 +1,15 @@
-import Category from "../models/category";
-import Meal from "../models/meal";
+import Category from "../models/category.js";
 
 const currentDateTime = new Date().toISOString();
+
+const defaultProjects = [
+  { name: "Project 1", grade: 0 },
+  { name: "Project 2", grade: 0 },
+  { name: "Project 3", grade: 0 },
+  { name: "Project 4", grade: 0 },
+  { name: "Test 1", grade: 0 },
+  { name: "Test 2", grade: 0 },
+];
 
 export const CATEGORIES = [
   new Category(
@@ -12,7 +20,8 @@ export const CATEGORIES = [
     "75001",
     30.7352,
     -94.4347,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c2",
@@ -22,7 +31,8 @@ export const CATEGORIES = [
     "75002",
     28.3923,
     -99.3997,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c3",
@@ -31,7 +41,8 @@ export const CATEGORIES = [
     "75006",
     28.3252,
     -101.149,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c4",
@@ -41,7 +52,8 @@ export const CATEGORIES = [
     "75007",
     26.7985,
     -93.5918,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c5",
@@ -51,7 +63,8 @@ export const CATEGORIES = [
     "75009",
     34.6012,
     -100.1122,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c6",
@@ -61,7 +74,8 @@ export const CATEGORIES = [
     "75010",
     29.2906,
     -94.7557,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c7",
@@ -71,7 +85,8 @@ export const CATEGORIES = [
     "75013",
     36.0098,
     -94.8012,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c8",
@@ -81,7 +96,8 @@ export const CATEGORIES = [
     "75014",
     33.0063,
     -95.55,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c9",
@@ -91,7 +107,8 @@ export const CATEGORIES = [
     "75015",
     28.5828,
     -94.8556,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c10",
@@ -101,7 +118,8 @@ export const CATEGORIES = [
     "75016",
     33.2381,
     -94.0381,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c11",
@@ -111,7 +129,8 @@ export const CATEGORIES = [
     "75017",
     26.3264,
     -100.0765,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c12",
@@ -121,7 +140,8 @@ export const CATEGORIES = [
     "75018",
     34.7158,
     -103.193,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c13",
@@ -131,7 +151,8 @@ export const CATEGORIES = [
     "75019",
     32.4058,
     -93.7857,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c14",
@@ -141,7 +162,8 @@ export const CATEGORIES = [
     "75020",
     31.0318,
     -104.5984,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c15",
@@ -151,7 +173,8 @@ export const CATEGORIES = [
     "75021",
     31.128,
     -94.3933,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c16",
@@ -161,7 +184,8 @@ export const CATEGORIES = [
     "75022",
     28.5242,
     -95.7135,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c17",
@@ -171,7 +195,8 @@ export const CATEGORIES = [
     "75023",
     31.0836,
     -98.0079,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c18",
@@ -181,7 +206,8 @@ export const CATEGORIES = [
     "75024",
     29.0661,
     -98.65,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c19",
@@ -191,7 +217,8 @@ export const CATEGORIES = [
     "75025",
     33.7212,
     -104.6381,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
   new Category(
     "c20",
@@ -201,6 +228,7 @@ export const CATEGORIES = [
     "75026",
     26.1179,
     -96.0975,
-    currentDateTime
+    currentDateTime,
+    [...defaultProjects]
   ),
 ];
